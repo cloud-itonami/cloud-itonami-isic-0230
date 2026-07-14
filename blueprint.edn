@@ -1,0 +1,13 @@
+{:itonami.blueprint/id "cloud-itonami-isic-0230"
+ :itonami.blueprint/name "Gathering of Non-Wood Forest Products Coordination"
+ :itonami.blueprint/isic-rev5 "0230"
+ :itonami.blueprint/domain :agriculture/nwfp-gathering
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:rural-employment :biodiversity-stewardship :sustainable-livelihoods]
+ :itonami.blueprint/governor :nwfp-gathering-coordination-governor
+ :itonami.blueprint/robotics false
+ :itonami.blueprint/required-technologies [:forest-ecology :identity :forms :dmn :audit-ledger :scheduling]
+ :itonami.blueprint/optional-technologies []
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented
+ :itonami.blueprint/design-adr "ADR-2607152300"}
