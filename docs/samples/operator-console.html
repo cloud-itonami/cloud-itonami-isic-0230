@@ -1,0 +1,67 @@
+<html><head><meta charset="utf-8"><title>cloud-itonami-isic-0230 &middot; non-wood forest product gathering coordination</title><style>
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ok { color: #137a3f; }
+body { font-family: system-ui,-apple-system,sans-serif; margin: 0; color: #1a1a1a; background: #fafafa; }
+header.bar { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #f0f0f0; }
+h2 { margin-top: 0; font-size: 15px; }
+.warn { color: #b25c00; background: #fff8e1; padding: 2px 6px; border-radius: 4px; }
+main { max-width: 980px; margin: 24px auto; padding: 0 20px; }
+header.bar h1 { font-size: 18px; margin: 0; font-weight: 600; }
+.muted { color: #888; font-size: 13px; }
+.critical { color: #fff; background: #b3261e; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.err { color: #b3261e; background: #fbe9e7; padding: 2px 6px; border-radius: 4px; }
+th { font-weight: 600; color: #555; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+header.bar .badge { margin-left: auto; font-size: 12px; color: #666; }
+code { font-size: 12px; background: #f4f4f4; padding: 1px 4px; border-radius: 3px; }
+</style></head><body>
+<header class="bar">
+  <h1>Non-wood forest product gathering coordination (ISIC 0230) — Operator Console</h1>
+  <span class="badge">read-only sample · governor-gated · never dispatches field crews or executes purchases directly</span>
+</header>
+<main>
+  <section class="card">
+    <h2>Gathering sites</h2>
+    <p class="muted">Demo snapshot — build-time-generated from <code>nwfp.store</code> via <code>nwfp.render-html</code> (<code>clojure -M:dev:render-html</code>), regenerated nightly.</p>
+    <table>
+      <thead><tr><th>Site</th><th>Location</th><th>Product</th><th>Quota used/total</th><th>Permit</th><th>Status</th><th>Last op status</th></tr></thead>
+      <tbody>
+        <tr><td>site-001</td><td>Cedar Hollow</td><td>resin</td><td>100.0/500.0 kg</td><td><span class="ok">verified</span></td><td>active</td><td><span class="ok">committed</span></td></tr>
+        <tr><td>site-002</td><td>Birchwood Draw</td><td>cork</td><td>480.0/500.0 kg</td><td><span class="ok">verified</span></td><td>active</td><td><span class="muted">no activity</span></td></tr>
+        <tr><td>site-003</td><td>Fern Basin</td><td>wild-mushrooms</td><td>0.0/300.0 kg</td><td><span class="warn">unverified</span></td><td>pending</td><td><span class="muted">no activity</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Action gate (NWFP Gathering Coordination Governor)</h2>
+    <p class="muted">HARD holds cannot be overridden. Harvest quotas and supply-order totals are independently recomputed, never trusted from the proposal; a site's own verification status is independently re-checked, never trusted from the advisor's rationale.</p>
+    <table>
+      <thead><tr><th>Op</th><th>Gate</th></tr></thead>
+      <tbody>
+        <tr><td><code>:log-harvest-record</code></td><td><span class="ok">phase-3 auto when clean</span></td></tr>
+        <tr><td><code>:schedule-field-operation</code></td><td><span class="warn">ALWAYS human approval &middot; site-verified?/quota independently re-checked &middot; over-quota is a permanent HARD block, no phase or approval can ever override it</span></td></tr>
+        <tr><td><code>:flag-sustainability-concern</code></td><td><span class="warn">ALWAYS human approval &middot; never auto, any phase</span></td></tr>
+        <tr><td><code>:order-supplies</code></td><td><span class="warn">ALWAYS human approval &middot; independent line-item total recompute &middot; escalates further if the recomputed total exceeds the cost threshold</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Audit ledger (this run)</h2>
+    <p class="muted">Append-only decision-fact log — every proposal, hold and commit this scenario produced.</p>
+    <table>
+      <thead><tr><th>Fact</th><th>Op</th><th>Subject</th><th>Basis</th></tr></thead>
+      <tbody>
+        <tr><td>committed</td><td><code>log-harvest-record</code></td><td>site-001</td><td>product-category, last-assessed</td></tr>
+        <tr><td>committed</td><td><code>schedule-field-operation</code></td><td>op-1</td><td>site-001</td></tr>
+        <tr><td>committed</td><td><code>flag-sustainability-concern</code></td><td>concern-1</td><td>site-001</td></tr>
+        <tr><td>committed</td><td><code>order-supplies</code></td><td>order-1</td><td>order-1</td></tr>
+        <tr><td>committed</td><td><code>order-supplies</code></td><td>order-3</td><td>order-3</td></tr>
+        <tr><td>governor-hold</td><td><code>schedule-field-operation</code></td><td>op-2</td><td>site-not-verified</td></tr>
+        <tr><td>governor-hold</td><td><code>schedule-field-operation</code></td><td>op-3</td><td>harvest-quota-exceeded</td></tr>
+        <tr><td>governor-hold</td><td><code>order-supplies</code></td><td>order-2</td><td>order-total-mismatch</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body></html>
