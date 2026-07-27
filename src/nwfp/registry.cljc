@@ -79,6 +79,30 @@
 
 ;; ----------------------------- supply-order checks -----------------------------
 
+(def ^:private amount-scale
+  "Sub-minor-unit scale used when comparing two money amounts: 1/10000
+  of a unit. Coarser than double representation error by many orders of
+  magnitude, finer than any distinction a real money carries."
+  10000)
+
+(defn- money=
+  "Exact-at-money-precision equality for two amounts.
+
+  `==` on raw doubles is NOT the right comparison here: a product or sum
+  of decimal quantities is routinely not the double nearest the true
+  total, so a CORRECT claim compared false and an entity that was never
+  wrong was rejected. Measured across this fleet's recompute shapes,
+  20-27% of cent-denominated combinations failed while being right.
+
+  Rounding both sides to `amount-scale` before comparing removes the
+  representation error while preserving every distinction the value can
+  actually carry. A missing or non-numeric amount never matches:
+  un-verifiable is not the same as correct."
+  [x y]
+  (and (number? x) (number? y)
+       (= (Math/round (* amount-scale (double x)))
+          (Math/round (* amount-scale (double y))))))
+
 (defn order-total
   "The ground-truth total for `order`'s own `:items` (each `{:qty n
   :unit-cost c}`) -- independent of whatever `:claimed-total` the
@@ -97,7 +121,7 @@
   order line."
   [{:keys [claimed-total] :as order}]
   (and (number? claimed-total)
-       (== (double claimed-total) (order-total order))))
+       (money= claimed-total (order-total order))))
 
 (defn order-exceeds-threshold?
   "Does `order`'s own independently-recomputed total exceed
