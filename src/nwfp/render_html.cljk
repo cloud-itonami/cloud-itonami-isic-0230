@@ -6,7 +6,7 @@
   no generator at all. This namespace drives the REAL actor stack
   (`nwfp.operation` -> `nwfp.governor` -> `nwfp.store`) through a
   scenario adapted from this repo's own `nwfp.sim` demo driver
-  (`clojure -M:dev:run`, confirmed to run correctly against the real
+  (`kbb -M:dev:run`, confirmed to run correctly against the real
   seeded site directory before this file was written -- every id/subject
   it references (site-001/site-002/site-003, op-1/op-2/op-3,
   concern-1, order-1/order-2/order-3) traces to `nwfp.store/sample-
@@ -21,7 +21,7 @@
   the page content, byte-identical across reruns against the same seed
   (verified by diffing two consecutive runs).
 
-  Usage: `clojure -M:dev:render-html [out-file]`
+  Usage: `kbb -M:dev:render-html [out-file]`
   (default `docs/samples/operator-console.html`)."
   (:require [jp-go-dds.skin]
             [kotoba.lang.text :as str]
@@ -164,7 +164,7 @@
      "<main>\n"
      "  <section class=\"card\">\n"
      "    <h2>Gathering sites</h2>\n"
-     "    <p class=\"muted\">Demo snapshot — build-time-generated from <code>nwfp.store</code> via <code>nwfp.render-html</code> (<code>clojure -M:dev:render-html</code>), regenerated nightly.</p>\n"
+     "    <p class=\"muted\">Demo snapshot — build-time-generated from <code>nwfp.store</code> via <code>nwfp.render-html</code> (<code>kbb -M:dev:render-html</code>), regenerated nightly.</p>\n"
      "    <table>\n"
      "      <thead><tr><th>Site</th><th>Location</th><th>Product</th><th>Quota used/total</th><th>Permit</th><th>Status</th><th>Last op status</th></tr></thead>\n"
      "      <tbody>\n"

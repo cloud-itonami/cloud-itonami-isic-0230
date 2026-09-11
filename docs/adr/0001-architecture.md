@@ -109,10 +109,10 @@ coordinator blueprint.
 
 ## Verification
 
-- `cloud-itonami-isic-0230`: `clojure -M:test` (and the equivalent
-  `clojure -M:dev:test`) green (all tests pass) across
+- `cloud-itonami-isic-0230`: `kbb -M:test` (and the equivalent
+  `kbb -M:dev:test`) green (all tests pass) across
   `nwfp.operation-test`, `nwfp.governor-contract-test`, `nwfp.phase-test`,
-  `nwfp.store-contract-test` and `nwfp.registry-test`; `clojure -M:dev:run`
+  `nwfp.store-contract-test` and `nwfp.registry-test`; `kbb -M:dev:run`
   demo narrative exercises proposal submission, escalation, and every
   HARD-hold scenario directly (not-propose-effect, unknown-op,
   site-not-verified, harvest-quota-exceeded, already-scheduled,
@@ -126,4 +126,4 @@ coordinator blueprint.
 - `deps.edn` pins `io.github.kotoba-lang/langgraph` and
   `io.github.kotoba-lang/langchain` via `:local/root` directly in the
   top-level `:deps` (not only under a `:dev` alias), so a bare
-  `clojure -M:test` resolves offline inside the monorepo checkout.
+  `kbb -M:test` resolves offline inside the monorepo checkout.
