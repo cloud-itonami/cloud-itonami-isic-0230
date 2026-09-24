@@ -3,7 +3,7 @@
   one happy path per op). The governor's full rule contract (HARD
   holds, escalation, phase gating) is exercised in `nwfp.governor-
   contract-test`; the Store contract in `nwfp.store-contract-test`."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [langgraph.graph :as g]
             [nwfp.operation :as op]
             [nwfp.store :as store]))
